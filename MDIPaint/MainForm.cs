@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace MDIPaint
 
         private void размерХолстаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CanvasSize cs = new CanvasSize();
+            Canvas cs = new Canvas();
             cs.CanvasWidth = ((Canvas)ActiveMdiChild).CanvasWidth;
             cs.CanvasHeight = ((Canvas)ActiveMdiChild).CanvasHeight;
             if (cs.ShowDialog() == DialogResult.OK)
@@ -82,7 +83,13 @@ namespace MDIPaint
                 MessageBox.Show("Значение должн быть целым числом.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
-        private void открытьToolStripMenuItem2_Click(object sender, EventArgs e)
+
+        private void сохранитьКакToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((Canvas)ActiveMdiChild).SaveAs();
+        }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Windows Bitmap (*.bmp)|*.bmp| Файлы JPEG (*.jpeg, *.jpg)|*.jpeg;*.jpg|Все файлы ()*.*|*.*";
@@ -93,14 +100,22 @@ namespace MDIPaint
                 frmChild.Show();
             }
         }
-        private void сохранитьКакToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            ((Canvas)ActiveMdiChild).SaveAs();
-        }
 
-        private void сохранитьКакToolStripMenuItem_Click(object sender, EventArgs e)
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
+        public void SaveAs()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.AddExtension = true;
+            dlg.Filter = "Windows Bitmap (*.bmp)|*.bmp| Файлы JPEG (*.jpg)|*.jpg";
+            ImageFormat[] ff = { ImageFormat.Bmp, ImageFormat.Jpeg };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                bmp.Save(dlg.FileName, ff[dlg.FilterIndex - 1]);
+            }
+        }
+
     }
 }
