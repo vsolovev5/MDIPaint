@@ -86,13 +86,12 @@ namespace MDIPaint
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.AddExtension = true;
-            dlg.Filter = "Windows Bitmap (*.bmp)|*.bmp| Файлы JPEG (*.jpg)|*ImageFormat[] ff = { ImageFormat.Bmp, ImageFormat.Jpeg }";
+            dlg.Filter = "Windows Bitmap (*.bmp)|*.bmp| Файлы JPEG (*.jpg)|*.jpg";
             ImageFormat[] ff = { ImageFormat.Bmp, ImageFormat.Jpeg };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 bmp.Save(dlg.FileName, ff[dlg.FilterIndex - 1]);
             }
-
         }
     }
 }
